@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { Link } from 'react-router';
+import useAuth from '../../Hooks/useAuth';
 
 const Register = () => {
   const {
@@ -9,8 +12,38 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
+  const { createUser, updateUserProfile, signInWithGoogle } = useAuth();
+
+  const [showPassword, setShowPassword] = useState(false);
+
   const onSubmit = (data) => {
     console.log('Form Data:', data);
+
+    createUser(data.email, data.password)
+      .then((result) => {
+        const user = result.user;
+        console.log('Firebase user:', user);
+
+        // Update profile with name
+        updateUserProfile(data.name, null)
+          .then(() => console.log('Profile updated'))
+          .catch((err) => console.log('Profile update error:', err));
+
+        // Here you can send data.role and data.phone to your backend / MongoDB
+        console.log('Role:', data.role, 'Phone:', data.phone);
+      })
+      .catch((error) => {
+        console.log('Registration error:', error.message);
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log('Google user:', result.user);
+        // Here you can save user info to MongoDB
+      })
+      .catch((err) => console.log('Google login error:', err));
   };
 
   return (
@@ -18,7 +51,6 @@ const Register = () => {
       <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
         <div className="mb-8 text-center">
           <h1 className="my-3 text-4xl font-bold">Sign Up</h1>
-          <p className="text-sm text-gray-400">Welcome to PlantNet</p>
         </div>
 
         <form
@@ -44,27 +76,49 @@ const Register = () => {
               )}
             </div>
 
-            {/* Image */}
+            {/* Role selection */}
             <div>
-              <label className="block mb-2 text-sm font-medium text-gray-700">
-                Profile Image
+              <label htmlFor="role" className="block mb-2 text-sm">
+                Role
+              </label>
+              <select
+                id="role"
+                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-primary bg-gray-200 text-gray-900"
+                {...register('role', { required: 'Role is required' })}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Select Role
+                </option>
+                <option value="Student">Student</option>
+                <option value="Tutor">Tutor</option>
+              </select>
+              {errors.role && (
+                <p className="text-red-500 text-sm">{errors.role.message}</p>
+              )}
+            </div>
+
+            {/* Phone */}
+            <div>
+              <label htmlFor="phone" className="block mb-2 text-sm">
+                Phone
               </label>
               <input
-                type="file"
-                accept="image/*"
-                className="block w-full text-sm text-gray-500
-                  file:mr-4 file:py-2 file:px-4
-                  file:rounded-md file:border-0
-                  file:text-sm file:font-semibold
-                  file:bg-secondary file:text-primary
-                  hover:file:bg-blue-100
-                  bg-gray-100 border border-dashed border-primary rounded-md cursor-pointer
-                  focus:outline-none py-2"
-                {...register('image')}
+                type="tel"
+                id="phone"
+                placeholder="Enter Your Phone Number"
+                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-primary bg-gray-200 text-gray-900"
+                {...register('phone', {
+                  required: 'Phone number is required',
+                  pattern: {
+                    value: /^[0-9]{10,15}$/,
+                    message: 'Enter a valid phone number',
+                  },
+                })}
               />
-              <p className="mt-1 text-xs text-gray-400">
-                PNG, JPG or JPEG (max 2MB)
-              </p>
+              {errors.phone && (
+                <p className="text-red-500 text-sm">{errors.phone.message}</p>
+              )}
             </div>
 
             {/* Email */}
@@ -91,12 +145,12 @@ const Register = () => {
             </div>
 
             {/* Password */}
-            <div>
+            <div className="relative">
               <label htmlFor="password" className="text-sm mb-2 block">
                 Password
               </label>
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 id="password"
                 placeholder="*******"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-primary bg-gray-200 text-gray-900"
@@ -113,6 +167,14 @@ const Register = () => {
                   },
                 })}
               />
+
+              <div
+                className="absolute right-3 top-10 cursor-pointer text-gray-600"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </div>
+
               {errors.password && (
                 <p className="text-red-500 text-sm">
                   {errors.password.message}
@@ -138,7 +200,7 @@ const Register = () => {
         </div>
 
         <div
-          onClick={() => console.log('Google Login')}
+          onClick={handleGoogleLogin}
           className="flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 cursor-pointer"
         >
           <FcGoogle size={32} />
