@@ -16,19 +16,19 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink to="">Home</NavLink>
+        <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink to="">Tuitions</NavLink>
+        <NavLink to="/Tuitions">Tuitions</NavLink>
       </li>
       <li>
-        <NavLink to="">Tutors</NavLink>
+        <NavLink to="/Tutors">Tutors</NavLink>
       </li>
       <li>
-        <NavLink to="">About</NavLink>
+        <NavLink to="/About">About</NavLink>
       </li>
       <li>
-        <NavLink to=""> Contact</NavLink>
+        <NavLink to="/Contact"> Contact</NavLink>
       </li>
     </>
   );
@@ -69,15 +69,26 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-end flex items-center space-x-2">
         {user ? (
-          <a onClick={handlelogOut} className="btn bg-primary text-secondary">
+          <button
+            onClick={handlelogOut}
+            className="btn bg-primary text-secondary"
+          >
             Log Out
-          </a>
+          </button>
         ) : (
-          <Link to="/login" className="btn bg-primary text-secondary">
-            Login
-          </Link>
+          <>
+            <Link to="/auth/login" className="btn bg-primary text-secondary">
+              Login
+            </Link>
+            <Link
+              to="/auth/register"
+              className="btn btn-outline bg-secondary text-primary"
+            >
+              Register
+            </Link>
+          </>
         )}
       </div>
     </div>

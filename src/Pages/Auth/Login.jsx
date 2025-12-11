@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext/AuthContext';
 import useAuth from '../../Hooks/useAuth';
 
@@ -10,6 +10,7 @@ const Login = () => {
   const { signInWithGoogle } = useContext(AuthContext);
   const { signIn } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -39,6 +40,7 @@ const Login = () => {
     try {
       const result = await signIn(data.email, data.password);
       console.log('User:', result.user);
+      navigate(location?.state || '/');
 
       // **Role fetch logic** - Firebase বা backend থেকে আসবে
       const role = result.user.role || 'Student'; // default fallback
@@ -52,6 +54,7 @@ const Login = () => {
     try {
       const result = await signInWithGoogle();
       const user = result.user;
+      navigate(location?.state || '/');
       console.log('Google User:', user);
 
       const role = user.role || 'Student'; // default fallback

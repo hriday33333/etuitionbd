@@ -1,9 +1,14 @@
 import { createBrowserRouter } from 'react-router';
 import AuthLayout from '../layouts/AuthLayout';
 import RootLayout from '../layouts/RootLayout';
+import About from '../Pages/About/About';
 import Login from '../Pages/Auth/Login';
 import Register from '../Pages/Auth/Register';
+import Contact from '../Pages/Contact/Contact';
 import Home from '../Pages/Home/Home';
+import Tuitions from '../Pages/Tuitions/Tuitions';
+import Tutors from '../Pages/Tutors/Tutors';
+import PrivateRoute from './PrivateRoute';
 
 export const router = createBrowserRouter([
   {
@@ -15,20 +20,24 @@ export const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path: '',
-        element: '',
+        path: '/Tuitions',
+        element: <Tuitions></Tuitions>,
       },
       {
-        path: '',
-        element: '',
+        path: '/Tutors',
+        element: (
+          <PrivateRoute>
+            <Tutors></Tutors>
+          </PrivateRoute>
+        ),
       },
       {
-        path: '',
-        element: '',
+        path: '/About',
+        element: <About></About>,
       },
       {
-        path: '',
-        element: '',
+        path: '/Contact',
+        element: <Contact></Contact>,
       },
       {
         path: '',
@@ -37,7 +46,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: '/',
+    path: '/auth',
     element: <AuthLayout></AuthLayout>,
     children: [
       {
