@@ -1,42 +1,11 @@
-import { Link, NavLink } from 'react-router';
-import Logo from '../../../Components/Logo';
-import useAuth from '../../../Hooks/useAuth';
+import Logo from "../../../Components/Logo";
 
 const Navbar = () => {
-  const { user, logOut } = useAuth();
-
-  const handlelogOut = () => {
-    logOut()
-      .then()
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const links = (
-    <>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-      <li>
-        <NavLink to="/Tuitions">Tuitions</NavLink>
-      </li>
-      <li>
-        <NavLink to="/Tutors">Tutors</NavLink>
-      </li>
-      <li>
-        <NavLink to="/About">About</NavLink>
-      </li>
-      <li>
-        <NavLink to="/Contact"> Contact</NavLink>
-      </li>
-    </>
-  );
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="ms-3 btn-ghost lg:hidden">
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -57,39 +26,52 @@ const Navbar = () => {
             tabIndex="-1"
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
-            {links}
+            <li>
+              <a>Item 1</a>
+            </li>
+            <li>
+              <a>Parent</a>
+              <ul className="p-2">
+                <li>
+                  <a>Submenu 1</a>
+                </li>
+                <li>
+                  <a>Submenu 2</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a>Item 3</a>
+            </li>
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">
-          <div className="-ms-5">
-            <Logo></Logo>
-          </div>
-        </a>
+        <Logo></Logo>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{links}</ul>
+        <ul className="menu menu-horizontal px-1">
+          <li>
+            <a>Item 1</a>
+          </li>
+          <li>
+            <details>
+              <summary>Parent</summary>
+              <ul className="p-2 bg-base-100 w-40 z-1">
+                <li>
+                  <a>Submenu 1</a>
+                </li>
+                <li>
+                  <a>Submenu 2</a>
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <a>Item 3</a>
+          </li>
+        </ul>
       </div>
-      <div className="navbar-end flex items-center space-x-2">
-        {user ? (
-          <button
-            onClick={handlelogOut}
-            className="btn bg-primary text-secondary"
-          >
-            Log Out
-          </button>
-        ) : (
-          <>
-            <Link to="/auth/login" className="btn bg-primary text-secondary">
-              Login
-            </Link>
-            <Link
-              to="/auth/register"
-              className="btn btn-outline bg-secondary text-primary"
-            >
-              Register
-            </Link>
-          </>
-        )}
+      <div className="navbar-end">
+        <a className="btn">Button</a>
       </div>
     </div>
   );
