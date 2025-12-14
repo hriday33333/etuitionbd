@@ -64,12 +64,17 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         {user ? (
-          <a onClick={handleLogOut} className="btn bg-secondary">Log Out</a>
+          <a onClick={handleLogOut} className="btn bg-secondary">
+            Log Out
+          </a>
         ) : (
           <Link to="/login" className="btn bg-secondary">
             Login
           </Link>
         )}
+        <Link to="/teachersHunt" className="btn bg-secondary mx-4">
+          Teachers Hunt
+        </Link>
       </div>
     </div>
   );

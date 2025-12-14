@@ -12,7 +12,7 @@ const Register = () => {
   } = useForm();
   const { registerUser } = useAuth();
   const handleRegistation = (data) => {
-    console.log('after register', data);
+    console.log('after register', data.photo[0]);
     registerUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
@@ -29,6 +29,29 @@ const Register = () => {
       </p>
       <form className="card-body" onSubmit={handleSubmit(handleRegistation)}>
         <fieldset className="fieldset">
+          {/* Name */}
+          <label className="label">Name</label>
+          <input
+            type="text"
+            {...register('name', { required: true })}
+            className="input"
+            placeholder="Your Name"
+          />
+          {errors.name?.type === 'required' && (
+            <p className="text-red-500 text-sm">Name is required</p>
+          )}
+          {/* Image Fild */}
+          <label className="label">Photo</label>
+
+          <input
+            type="file"
+            {...register('photo', { required: true })}
+            className="file-input"
+            placeholder="Your Photo"
+          />
+          {errors.name?.type === 'required' && (
+            <p className="text-red-500 text-sm">Photo is required</p>
+          )}
           {/* email */}
           <label className="label">Email</label>
           <input
