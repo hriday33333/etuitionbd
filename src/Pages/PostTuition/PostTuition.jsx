@@ -2,6 +2,8 @@ import { useForm, useWatch } from 'react-hook-form';
 import { useLoaderData } from 'react-router';
 import Swal from 'sweetalert2';
 import Logo from '../../Components/Logo';
+import useAuth from '../../Hooks/useAuth';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const PostTuition = () => {
   const {
@@ -10,6 +12,10 @@ const PostTuition = () => {
     control,
     formState: { errors },
   } = useForm();
+
+  const { user } = useAuth();
+
+  const axiosSecure = useAxiosSecure();
 
   const stusentRegion = useWatch({ control, name: 'studentRegion' });
 
@@ -34,7 +40,10 @@ const PostTuition = () => {
       confirmButtonText: 'Yes, post it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('Form Data:', data);
+        // console.log('Form Data:', data);
+        axiosSecure.post('/studentInfo', data).then((res) => {
+          console.log('after saving data', res.data);
+        });
         // Swal.fire({
         //   title: 'Posted!',
         //   text: 'Your tuition has been posted successfully.',
@@ -93,6 +102,7 @@ const PostTuition = () => {
                       message: 'Name must be at least 3 characters',
                     },
                   })}
+                  defaultValue={user?.displayName}
                   placeholder="Your full name"
                   className={`w-full px-4 py-3 border rounded-xl placeholder-gray-400 italic
                 focus:outline-none focus:ring-4 focus:ring-blue-200
@@ -121,6 +131,7 @@ const PostTuition = () => {
                       message: 'Enter a valid email',
                     },
                   })}
+                  defaultValue={user?.email}
                   placeholder="e.g. student@email.com"
                   className={`w-full px-4 py-3 border rounded-xl placeholder-gray-400 italic
                 focus:outline-none focus:ring-4 focus:ring-blue-200

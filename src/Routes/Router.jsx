@@ -1,8 +1,10 @@
 import { createBrowserRouter } from 'react-router';
 import AuthLayout from '../layouts/AuthLayout';
+import DashBordLayout from '../layouts/DashBordLayout';
 import RootLayout from '../layouts/RootLayout';
 import Login from '../Pages/Auth/Login/Login';
 import Register from '../Pages/Auth/Register/Register';
+import MyTuitions from '../Pages/Dashboard/StudentsDashboard/MyTuitions';
 import GoogleMap from '../Pages/GoogleMap/GoogleMap';
 import Home from '../Pages/Home/Home';
 import PostTuition from '../Pages/PostTuition/PostTuition';
@@ -53,6 +55,20 @@ export const router = createBrowserRouter([
       {
         path: 'register',
         element: <Register></Register>,
+      },
+    ],
+  },
+  {
+    path: 'dashboard',
+    element: (
+      <PrivetRouter>
+        <DashBordLayout></DashBordLayout>
+      </PrivetRouter>
+    ),
+    children: [
+      {
+        path: 'my-tuitions',
+        element: <MyTuitions></MyTuitions>,
       },
     ],
   },
