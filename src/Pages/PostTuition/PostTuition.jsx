@@ -1,21 +1,47 @@
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { useLoaderData } from 'react-router';
+import Swal from 'sweetalert2';
 import Logo from '../../Components/Logo';
 
 const PostTuition = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm();
 
+  const stusentRegion = useWatch({ control, name: 'studentRegion' });
+
   const serviceCenters = useLoaderData();
-  const regions = serviceCenters.map((c) => c.region);
-  console.log(regions);
+  const regionsDuplicate = serviceCenters.map((c) => c.region);
+  const regions = [...new Set(regionsDuplicate)];
+
+  const districtsByRegion = (region) => {
+    const regionDistrics = serviceCenters.filter((c) => c.region === region);
+    return regionDistrics.map((d) => d.district);
+  };
 
   const handlePostTuition = (data) => {
-    console.log('Form Data:', data);
-    alert('Tuition Posted Successfully!');
+    // SweetAlert confirm
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You want to post this tuition!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, post it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // console.log('Form Data:', data);
+        // Swal.fire({
+        //   title: 'Posted!',
+        //   text: 'Your tuition has been posted successfully.',
+        //   icon: 'success',
+        // });
+      }
+    });
   };
 
   return (
@@ -42,7 +68,7 @@ const PostTuition = () => {
           onSubmit={handleSubmit(handlePostTuition)}
           className="grid grid-cols-1 md:grid-cols-2 gap-8"
         >
-          {/* Fieldset for Subject & Class */}
+          {/* === Basic Info Fieldset === */}
           <fieldset
             className="md:col-span-2 border-2 border-blue-400 rounded-2xl
                                p-6 bg-gradient-to-r from-white via-blue-50 to-white
@@ -53,7 +79,7 @@ const PostTuition = () => {
             </legend>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-              {/* Name input */}
+              {/* Name */}
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1">
                   Name
@@ -81,7 +107,7 @@ const PostTuition = () => {
                 )}
               </div>
 
-              {/* Email input */}
+              {/* Email */}
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1">
                   Email
@@ -92,7 +118,7 @@ const PostTuition = () => {
                     required: 'Email is required',
                     pattern: {
                       value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                      message: 'Enter a valid email address',
+                      message: 'Enter a valid email',
                     },
                   })}
                   placeholder="e.g. student@email.com"
@@ -109,7 +135,7 @@ const PostTuition = () => {
                 )}
               </div>
 
-              {/* Phone Number input */}
+              {/* Phone */}
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1">
                   Phone Number
@@ -136,7 +162,8 @@ const PostTuition = () => {
                   </p>
                 )}
               </div>
-              {/* subjects input */}
+
+              {/* Subject */}
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1">
                   Subject
@@ -158,7 +185,7 @@ const PostTuition = () => {
                 )}
               </div>
 
-              {/* class input */}
+              {/* Class */}
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1">
                   Class
@@ -182,7 +209,7 @@ const PostTuition = () => {
             </div>
           </fieldset>
 
-          {/* Fieldset for Location & Budget */}
+          {/* === Location & Budget Fieldset === */}
           <fieldset
             className="md:col-span-2 border-2 border-green-400 rounded-2xl
                                p-6 bg-gradient-to-r from-white via-green-50 to-white
@@ -191,32 +218,53 @@ const PostTuition = () => {
             <legend className="uppercase tracking-wide text-lg font-bold text-green-700 px-2">
               Location & Budget
             </legend>
-            {/* location input */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+              {/* Student Region */}
+              <fieldset className="w-full">
+                <legend className="block text-sm font-medium text-gray-600 mb-1">
+                  Student Region
+                </legend>
+                <select
+                  {...register('studentRegion')}
+                  defaultValue="Pick a region"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl
+               text-gray-700
+               focus:outline-none focus:ring-4 focus:ring-purple-200
+               focus:border-purple-400 transition duration-300"
+                >
+                  <option disabled>Pick a region</option>
+                  {regions.map((r, i) => (
+                    <option key={i} value={r}>
+                      {r}
+                    </option>
+                  ))}
+                </select>
+              </fieldset>
+
+              {/* Student District */}
+              <fieldset className="w-full">
+                <legend className="block text-sm font-medium text-gray-600 mb-1">
+                  Student District
+                </legend>
+                <select
+                  {...register('studentDistrict')}
+                  defaultValue="Pick a district"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl
+               text-gray-700
+               focus:outline-none focus:ring-4 focus:ring-purple-200
+               focus:border-purple-400 transition duration-300"
+                >
+                  <option disabled>Pick a district</option>
+                  {districtsByRegion(stusentRegion).map((r, i) => (
+                    <option key={i} value={r}>
+                      {r}
+                    </option>
+                  ))}
+                </select>
+              </fieldset>
+
+              {/* Budget */}
               <div>
-                <label className="block text-sm font-medium text-gray-600 mb-1">
-                  Location
-                </label>
-                <input
-                  type="text"
-                  {...register('location', {
-                    required: 'Location is required',
-                  })}
-                  placeholder="e.g. Dhanmondi, Dhaka"
-                  className={`w-full px-4 py-3 border rounded-xl placeholder-gray-400 italic
-                              focus:outline-none focus:ring-4 focus:ring-green-200
-                              focus:border-green-400 transition duration-300 ease-in-out ${
-                                errors.location ? 'border-red-500' : ''
-                              }`}
-                />
-                {errors.location && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.location.message}
-                  </p>
-                )}
-              </div>
-              <div>
-                {/* $ budgt inpyt $ */}
                 <label className="block text-sm font-medium text-gray-600 mb-1">
                   Monthly Budget (৳)
                 </label>
@@ -242,7 +290,7 @@ const PostTuition = () => {
             </div>
           </fieldset>
 
-          {/* Fieldset for Preferences */}
+          {/* === Preferences Fieldset === */}
           <fieldset
             className="md:col-span-2 border-2 border-purple-400 rounded-2xl
                                p-6 bg-gradient-to-r from-white via-purple-50 to-white
@@ -252,8 +300,8 @@ const PostTuition = () => {
               Preferences
             </legend>
 
-            {/* day input */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+              {/* Days */}
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1">
                   Days Per Week
@@ -280,8 +328,9 @@ const PostTuition = () => {
                   </p>
                 )}
               </div>
+
+              {/* Gender */}
               <div>
-                {/* gender input */}
                 <label className="block text-sm font-medium text-gray-600 mb-1">
                   Tutor Gender Preference
                 </label>
