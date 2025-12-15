@@ -1,5 +1,6 @@
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../Hooks/useAuth';
 import logo from '../../../assets/logo5.png';
 import SocialLogin from '../SocialLogin/SocialLogin';
@@ -10,12 +11,41 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { registerUser } = useAuth();
+  const { registerUser, updateUserProfile } = useAuth();
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const handleRegistation = (data) => {
     console.log('after register', data.photo[0]);
+    const proFileImg = data.photo[0];
     registerUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
+
+        // store image data
+        const formData = new FormData();
+        formData.append('image', proFileImg);
+
+        // get the photo in form data
+        const img_API_URL = `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_image_host_key
+        }`;
+        axios.post(img_API_URL, formData).then((res) => {
+          console.log('after image uploade', res.data.data.url);
+
+          // update user frofile to firebase
+          const userProfile = {
+            displayName: data.name,
+            photoURL: res.data.data.url,
+          };
+          updateUserProfile(userProfile)
+            .then(() => {
+              console.log('user profile updated');
+              navigate(location?.state || '/');
+            })
+            .catch((error) => console.log(error));
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -98,7 +128,11 @@ const Register = () => {
         </fieldset>
         <p>
           Already have an account
-          <Link className="text-primary hover:text-secondary" to="/login">
+          <Link
+            state={location.state}
+            className="text-primary hover:text-secondary"
+            to="/login"
+          >
             Login
           </Link>{' '}
         </p>

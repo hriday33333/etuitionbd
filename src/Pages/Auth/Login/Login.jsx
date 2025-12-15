@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../Hooks/useAuth';
 import logo1 from '../../../assets/logo5.png';
 import SocialLogin from '../SocialLogin/SocialLogin';
@@ -11,11 +11,14 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const { signinUser } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
   const handleLogin = (data) => {
     console.log(data);
     signinUser(data.email, data.password)
       .then((result) => {
-        console.log(result);
+        console.log(result.user);
+        navigate(location?.state || '/');
       })
       .catch((error) => {
         console.log(error);
@@ -63,7 +66,11 @@ const Login = () => {
         </fieldset>
         <p>
           New to ETUTION.BD
-          <Link className="text-primary hover:text-secondary" to="/register">
+          <Link
+            state={location.state}
+            className="text-primary hover:text-secondary"
+            to="/register"
+          >
             Register
           </Link>{' '}
         </p>

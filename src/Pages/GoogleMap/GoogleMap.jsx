@@ -46,7 +46,7 @@ const GoogleMap = () => {
             <input
               type="search"
               className="grow"
-              name="locarion"
+              name="location"
               placeholder="Search"
             />
           </label>

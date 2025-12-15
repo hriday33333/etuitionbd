@@ -25,7 +25,7 @@ const Navbar = () => {
         <NavLink to="/map">Map</NavLink>
       </li>
       <li>
-        <NavLink to="">Item 1</NavLink>
+        <NavLink to="/post_tuition">Post Tuition</NavLink>
       </li>
     </>
   );
@@ -72,8 +72,8 @@ const Navbar = () => {
             Login
           </Link>
         )}
-        <Link to="/teachersHunt" className="btn bg-secondary mx-4">
-          Teachers Hunt
+        <Link to="/tuitor" className="btn bg-secondary mx-4">
+          Tuitor
         </Link>
       </div>
     </div>
