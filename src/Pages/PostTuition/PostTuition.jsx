@@ -34,7 +34,7 @@ const PostTuition = () => {
       confirmButtonText: 'Yes, post it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        // console.log('Form Data:', data);
+        console.log('Form Data:', data);
         // Swal.fire({
         //   title: 'Posted!',
         //   text: 'Your tuition has been posted successfully.',
