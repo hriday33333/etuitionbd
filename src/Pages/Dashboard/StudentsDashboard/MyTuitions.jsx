@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { FaRegEdit } from 'react-icons/fa';
 import { GrView } from 'react-icons/gr';
+import { Link } from 'react-router';
 import Swal from 'sweetalert2';
 import useAuth from '../../../Hooks/useAuth';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
@@ -9,7 +10,7 @@ import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 const MyTuitions = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const { data: studentInfo = [] } = useQuery({
+  const { data: studentInfo = [], refetch } = useQuery({
     queryKey: ['MyTuitions', user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/studentInfo?email=${user.email}`);
@@ -30,20 +31,17 @@ const MyTuitions = () => {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/studentInfo/${id}`)
-        .then(res=>{
-          console.log(res.data)
-          if(res.data.deletedCount){
-             Swal.fire({
-          title: "Deleted!",
-          text: "Your student Info requst has been deleted.",
-          icon: "success"
-        });
+        axiosSecure.delete(`/studentInfo/${id}`).then((res) => {
+          console.log(res.data);
+          if (res.data.deletedCount) {
+            refetch();
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'Your student Info requst has been deleted.',
+              icon: 'success',
+            });
           }
-
-        })
-
-
+        });
       }
     });
   };
@@ -61,6 +59,7 @@ const MyTuitions = () => {
               <th>Class</th>
               <th>Subject</th>
               <th>Budget (৳)</th>
+              <th>Payment</th>
               <th>Payment Status</th>
               <th>Actions</th>
             </tr>
@@ -73,7 +72,18 @@ const MyTuitions = () => {
                 <td>{student.class}</td>
                 <td>{student.subject}</td>
                 <td>{student.budget}</td>
-                <td></td>
+                <td>
+                  {student.paymentStatus === 'paid' ? (
+                    <span className="text-green-400">paid</span>
+                  ) : (
+                    <Link to={`/dashboard/payment/${student._id}`}>
+                      <button className="btn btn-sm btn-secondary text-black">
+                        Pay
+                      </button>
+                    </Link>
+                  )}
+                </td>
+                <td>{student.delevaryStatus}</td>
                 <td>
                   <button className="btn btn-square hover:bg-secondary">
                     <FaRegEdit />

@@ -10,6 +10,7 @@ import Home from '../Pages/Home/Home';
 import PostTuition from '../Pages/PostTuition/PostTuition';
 import Tuitor from '../Pages/Tuitor/Tuitor';
 import PrivetRouter from './PrivetRouter';
+import Payment from '../Pages/Dashboard/Payment/Payment';
 
 export const router = createBrowserRouter([
   {
@@ -70,6 +71,10 @@ export const router = createBrowserRouter([
         path: 'my-tuitions',
         element: <MyTuitions></MyTuitions>,
       },
+      {
+        path:'payment/:studentId',
+        element:<Payment></Payment>
+      }
     ],
   },
 ]);
