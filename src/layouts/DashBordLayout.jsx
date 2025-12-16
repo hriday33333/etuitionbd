@@ -1,9 +1,10 @@
+import { FaBookReader } from 'react-icons/fa';
 import { Link, NavLink, Outlet } from 'react-router';
 import Logo from '../Components/Logo';
 
 const DashBordLayout = () => {
   return (
-    <div className="drawer lg:drawer-open">
+    <div className="drawer lg:drawer-open max-w-7xl mx-auto ">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         {/* Navbar */}
@@ -73,7 +74,15 @@ const DashBordLayout = () => {
 
             {/*our dashboard links  */}
             <li>
-              <NavLink to="/dashboard/my-tuitions">My Tuitions</NavLink>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="My tuitions"
+                to="/dashboard/my-tuitions"
+              >
+                {' '}
+                <FaBookReader />
+                <span className="is-drawer-close:hidden">My Tuitions</span>
+              </NavLink>
             </li>
             {/* List item */}
             <li>
