@@ -13,6 +13,7 @@ import Home from '../Pages/Home/Home';
 import PostTuition from '../Pages/PostTuition/PostTuition';
 import Tuitor from '../Pages/Tuitor/Tuitor';
 import PrivetRouter from './PrivetRouter';
+import PaymentHistory from '../Pages/Dashboard/PaymentHistory/PaymentHistory';
 
 export const router = createBrowserRouter([
   {
@@ -85,6 +86,10 @@ export const router = createBrowserRouter([
         path: 'payment-cancelled',
         element: <PaymentCancelled></PaymentCancelled>,
       },
+      {
+        path:'payment-history',
+        element:<PaymentHistory></PaymentHistory>
+      }
     ],
   },
 ]);

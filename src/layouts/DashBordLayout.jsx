@@ -1,4 +1,5 @@
 import { FiBookOpen } from "react-icons/fi";
+import { FaCcMastercard } from "react-icons/fa6";
 import { Link, NavLink, Outlet } from 'react-router';
 import Logo from '../Components/Logo';
 
@@ -44,7 +45,7 @@ const DashBordLayout = () => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
+        <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64 ">
           {/* Sidebar content here */}
           <ul className="menu w-full grow">
             {/* List item */}
@@ -73,7 +74,7 @@ const DashBordLayout = () => {
             </li>
 
             {/*our dashboard links  */}
-            <li>
+            <li className="mt-8">
               <NavLink
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-secondary"
                 data-tip="My tuitions"
@@ -82,6 +83,18 @@ const DashBordLayout = () => {
                 {' '}
                 <FiBookOpen />
                 <span className="is-drawer-close:hidden">My Tuitions</span>
+              </NavLink>
+            </li>
+            {/* payment History */}
+            <li>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-secondary"
+                data-tip="Payment History"
+                to="/dashboard/payment-history"
+              >
+                {' '}
+               <FaCcMastercard />
+                <span className="is-drawer-close:hidden">Payment History</span>
               </NavLink>
             </li>
             {/* List item */}
