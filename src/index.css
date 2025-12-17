@@ -10,3 +10,14 @@
   --color-primary: #00273d;
   --color-secondary: #CAEB66;
 }
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  background: rgba(255, 255, 255, 0.6); /* glass look */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}

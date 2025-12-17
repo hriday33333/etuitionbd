@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import Logo from '../../Components/Logo';
 import useAuth from '../../Hooks/useAuth';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import { useNavigate } from 'react-router';
 
 const PostTuition = () => {
   const {
@@ -12,6 +13,8 @@ const PostTuition = () => {
     control,
     formState: { errors },
   } = useForm();
+
+  const navigate = useNavigate()
 
   const { user } = useAuth();
 
@@ -43,12 +46,17 @@ const PostTuition = () => {
         // console.log('Form Data:', data);
         axiosSecure.post('/studentInfo', data).then((res) => {
           console.log('after saving data', res.data);
+          if (res.data.insertedId) {
+            navigate('/dashboard/my-tuitions')
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'tuition has created. please pay',
+              showConfirmButton: false,
+              timer: 2500,
+            });
+          }
         });
-        // Swal.fire({
-        //   title: 'Posted!',
-        //   text: 'Your tuition has been posted successfully.',
-        //   icon: 'success',
-        // });
       }
     });
   };

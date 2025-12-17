@@ -54,7 +54,7 @@ const MyTuitions = () => {
     };
     const res = await axiosSecure.post('/create-checkout-session', paymentInfo);
     console.log(res.data);
-    window.location.replace(res.data.url);
+    window.location.assign(res.data.url);
   };
 
   return (
