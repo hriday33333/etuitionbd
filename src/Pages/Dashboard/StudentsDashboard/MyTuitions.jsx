@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { FaRegEdit } from 'react-icons/fa';
 import { GrView } from 'react-icons/gr';
-import { Link } from 'react-router';
 import Swal from 'sweetalert2';
 import useAuth from '../../../Hooks/useAuth';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
@@ -46,6 +45,18 @@ const MyTuitions = () => {
     });
   };
 
+  const handlePayment = async (student) => {
+    const paymentInfo = {
+      budget: student.budget,
+      studentId: student._id,
+      senderEmail: student.email,
+      studentName: student.name,
+    };
+    const res = await axiosSecure.post('/create-checkout-session', paymentInfo);
+    console.log(res.data);
+    window.location.replace(res.data.url);
+  };
+
   return (
     <div>
       <h1>all of my tuition:{studentInfo.length}</h1>
@@ -76,11 +87,12 @@ const MyTuitions = () => {
                   {student.paymentStatus === 'paid' ? (
                     <span className="text-green-400">paid</span>
                   ) : (
-                    <Link to={`/dashboard/payment/${student._id}`}>
-                      <button className="btn btn-sm btn-secondary text-black">
-                        Pay
-                      </button>
-                    </Link>
+                    <button
+                      onClick={() => handlePayment(student)}
+                      className="btn btn-sm btn-secondary text-black"
+                    >
+                      Pay
+                    </button>
                   )}
                 </td>
                 <td>{student.delevaryStatus}</td>

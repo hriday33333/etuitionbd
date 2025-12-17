@@ -4,13 +4,15 @@ import DashBordLayout from '../layouts/DashBordLayout';
 import RootLayout from '../layouts/RootLayout';
 import Login from '../Pages/Auth/Login/Login';
 import Register from '../Pages/Auth/Register/Register';
+import Payment from '../Pages/Dashboard/Payment/Payment';
+import PaymentCancelled from '../Pages/Dashboard/Payment/PaymentCancelled';
+import PaymentSuccess from '../Pages/Dashboard/Payment/PaymentSuccess';
 import MyTuitions from '../Pages/Dashboard/StudentsDashboard/MyTuitions';
 import GoogleMap from '../Pages/GoogleMap/GoogleMap';
 import Home from '../Pages/Home/Home';
 import PostTuition from '../Pages/PostTuition/PostTuition';
 import Tuitor from '../Pages/Tuitor/Tuitor';
 import PrivetRouter from './PrivetRouter';
-import Payment from '../Pages/Dashboard/Payment/Payment';
 
 export const router = createBrowserRouter([
   {
@@ -72,9 +74,17 @@ export const router = createBrowserRouter([
         element: <MyTuitions></MyTuitions>,
       },
       {
-        path:'payment/:studentId',
-        element:<Payment></Payment>
-      }
+        path: 'payment/:studentId',
+        element: <Payment></Payment>,
+      },
+      {
+        path: 'payment-success',
+        element: <PaymentSuccess></PaymentSuccess>,
+      },
+      {
+        path: 'payment-cancelled',
+        element: <PaymentCancelled></PaymentCancelled>,
+      },
     ],
   },
 ]);
