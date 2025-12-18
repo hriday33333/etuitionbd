@@ -18,26 +18,37 @@ const MyTuitions = () => {
   });
 
   const handleStudentInfoDelete = (id) => {
-    console.log(id);
-
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#6366F1', // Indigo
+      cancelButtonColor: '#EF4444',  // Red
       confirmButtonText: 'Yes, delete it!',
+      background: '#F3F4F6',         // Light gray background
+      color: '#1F2937',              // Dark text
+      customClass: {
+        popup: 'rounded-xl shadow-2xl p-6',
+        title: 'text-indigo-600 font-bold',
+        confirmButton: 'px-6 py-2 rounded-lg',
+        cancelButton: 'px-6 py-2 rounded-lg',
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure.delete(`/studentInfo/${id}`).then((res) => {
-          console.log(res.data);
           if (res.data.deletedCount) {
             refetch();
             Swal.fire({
               title: 'Deleted!',
-              text: 'Your student Info requst has been deleted.',
+              text: 'Your student Info request has been deleted.',
               icon: 'success',
+              confirmButtonColor: '#6366F1',
+              background: '#F3F4F6',
+              customClass: {
+                popup: 'rounded-xl shadow-2xl p-6',
+                title: 'text-green-600 font-bold',
+              },
             });
           }
         });
@@ -53,19 +64,21 @@ const MyTuitions = () => {
       studentName: student.name,
     };
     const res = await axiosSecure.post('/create-checkout-session', paymentInfo);
-    console.log(res.data);
     window.location.assign(res.data.url);
   };
 
   return (
     <div>
-      <h1>all of my tuition:{studentInfo.length}</h1>
-      <div className="overflow-x-auto">
-        <table className="table ">
-          {/* head */}
+      <h1 className="text-xl font-bold mb-4">
+        All of my tuition: {studentInfo.length}
+      </h1>
+
+      {/* বড় ডিভাইসে টেবিল */}
+      <div className="hidden md:block overflow-x-auto">
+        <table className="table">
           <thead>
             <tr>
-              <th></th>
+              <th>#</th>
               <th>Name</th>
               <th>Class</th>
               <th>Subject</th>
@@ -78,34 +91,34 @@ const MyTuitions = () => {
           <tbody>
             {studentInfo.map((student, index) => (
               <tr key={student._id}>
-                <th>{index + 1}</th>
+                <td>{index + 1}</td>
                 <td>{student.name}</td>
                 <td>{student.class}</td>
                 <td>{student.subject}</td>
                 <td>{student.budget}</td>
                 <td>
                   {student.paymentStatus === 'paid' ? (
-                    <span className="text-green-400">paid</span>
+                    <span className="text-green-400">Paid ✅</span>
                   ) : (
                     <button
                       onClick={() => handlePayment(student)}
-                      className="btn btn-sm btn-secondary text-black"
+                      className="btn btn-sm bg-indigo-400 text-white hover:bg-indigo-600"
                     >
                       Pay
                     </button>
                   )}
                 </td>
                 <td>{student.delevaryStatus}</td>
-                <td>
-                  <button className="btn btn-square hover:bg-secondary">
+                <td className="flex gap-2">
+                  <button className="btn btn-square bg-yellow-300 hover:bg-yellow-400">
                     <FaRegEdit />
                   </button>
-                  <button className="btn btn-square hover:bg-secondary">
+                  <button className="btn btn-square bg-blue-300 hover:bg-blue-400">
                     <GrView />
                   </button>
                   <button
                     onClick={() => handleStudentInfoDelete(student._id)}
-                    className="btn btn-square hover:bg-secondary"
+                    className="btn btn-square bg-red-400 hover:bg-red-600 text-white"
                   >
                     <AiTwotoneDelete />
                   </button>
@@ -114,6 +127,51 @@ const MyTuitions = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* ছোট ডিভাইসে কার্ড */}
+      <div className="md:hidden space-y-4 px-4">
+        {studentInfo.map((student, index) => (
+          <div
+            key={student._id}
+            className="border rounded-xl shadow-lg p-6 bg-gradient-to-r from-indigo-50 to-purple-100 hover:scale-[1.02] transition-transform"
+          >
+            <h2 className="font-bold text-lg text-indigo-700">
+              {index + 1}. {student.name}
+            </h2>
+            <p className="text-gray-600">Class: {student.class}</p>
+            <p className="text-gray-600">Subject: {student.subject}</p>
+            <p className="text-gray-800 font-semibold">Budget: ৳{student.budget}</p>
+            <p>
+              Payment:{' '}
+              {student.paymentStatus === 'paid' ? (
+                <span className="text-green-500 font-bold">Paid ✅</span>
+              ) : (
+                <button
+                  onClick={() => handlePayment(student)}
+                  className="btn btn-sm bg-indigo-400 text-white hover:bg-indigo-600"
+                >
+                  Pay
+                </button>
+              )}
+            </p>
+            <p>Status: {student.delevaryStatus}</p>
+            <div className="flex gap-3 mt-3">
+              <button className="btn btn-sm bg-yellow-300 hover:bg-yellow-400">
+                <FaRegEdit />
+              </button>
+              <button className="btn btn-sm bg-blue-300 hover:bg-blue-400">
+                <GrView />
+              </button>
+              <button
+                onClick={() => handleStudentInfoDelete(student._id)}
+                className="btn btn-sm bg-red-400 hover:bg-red-600 text-white"
+              >
+                <AiTwotoneDelete />
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
