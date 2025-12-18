@@ -52,7 +52,7 @@ const DashBordLayout = () => {
             <li>
               <Link
                 to="/"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-secondary"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-secondary  "
                 data-tip="Homepage"
               >
                 {/* Home icon */}

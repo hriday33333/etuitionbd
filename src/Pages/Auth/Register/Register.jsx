@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../Hooks/useAuth';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import logo from '../../../assets/logo5.png';
 import SocialLogin from '../SocialLogin/SocialLogin';
 
@@ -15,9 +16,9 @@ const Register = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
 
   const handleRegistation = (data) => {
-    console.log('after register', data.photo[0]);
     const proFileImg = data.photo[0];
     registerUser(data.email, data.password)
       .then((result) => {
@@ -32,12 +33,21 @@ const Register = () => {
           import.meta.env.VITE_image_host_key
         }`;
         axios.post(img_API_URL, formData).then((res) => {
-          console.log('after image uploade', res.data.data.url);
-
+          const photoURL = res.data.data.url;
+          const usersInfo = {
+            email: data.email,
+            displayName: data.name,
+            photoURL: photoURL,
+          };
+          axiosSecure.post('/userInfo', usersInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log('user created in the database ');
+            }
+          });
           // update user frofile to firebase
           const userProfile = {
             displayName: data.name,
-            photoURL: res.data.data.url,
+            photoURL: photoURL,
           };
           updateUserProfile(userProfile)
             .then(() => {
