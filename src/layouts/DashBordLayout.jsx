@@ -1,5 +1,6 @@
-import { FiBookOpen } from "react-icons/fi";
-import { FaCcMastercard } from "react-icons/fa6";
+import { FaCcMastercard } from 'react-icons/fa6';
+import { FiBookOpen } from 'react-icons/fi';
+import { GiTeacher } from "react-icons/gi";
 import { Link, NavLink, Outlet } from 'react-router';
 import Logo from '../Components/Logo';
 
@@ -93,8 +94,20 @@ const DashBordLayout = () => {
                 to="/dashboard/payment-history"
               >
                 {' '}
-               <FaCcMastercard />
+                <FaCcMastercard />
                 <span className="is-drawer-close:hidden">Payment History</span>
+              </NavLink>
+            </li>
+            {/* Approve Tuitor */}
+            <li>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-secondary"
+                data-tip="Approve Tuitor"
+                to="/dashboard/approve-tuitor"
+              >
+                {' '}
+               <GiTeacher />
+                <span className="is-drawer-close:hidden">Approve Tuitor</span>
               </NavLink>
             </li>
             {/* List item */}

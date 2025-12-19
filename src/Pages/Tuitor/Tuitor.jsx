@@ -49,7 +49,7 @@ const Tutor = () => {
               timer: 2000,
               showConfirmButton: false,
             });
-            navigate('/dashboard');
+            // navigate('/dashboard/approve-tuitor');
           }
         });
       }
@@ -85,6 +85,7 @@ const Tutor = () => {
               <div>
                 <label className="text-sm font-medium">Name</label>
                 <input
+                  {...register('name')}
                   readOnly
                   value={user?.displayName}
                   className="w-full px-4 py-3 border rounded-xl bg-gray-100"
@@ -94,6 +95,7 @@ const Tutor = () => {
               <div>
                 <label className="text-sm font-medium">Email</label>
                 <input
+                  {...register('email')}
                   readOnly
                   value={user?.email}
                   className="w-full px-4 py-3 border rounded-xl bg-gray-100"

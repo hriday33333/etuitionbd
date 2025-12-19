@@ -4,16 +4,17 @@ import DashBordLayout from '../layouts/DashBordLayout';
 import RootLayout from '../layouts/RootLayout';
 import Login from '../Pages/Auth/Login/Login';
 import Register from '../Pages/Auth/Register/Register';
+import ApproveTuitor from '../Pages/Dashboard/ApproveTuitor/ApproveTuitor';
 import Payment from '../Pages/Dashboard/Payment/Payment';
 import PaymentCancelled from '../Pages/Dashboard/Payment/PaymentCancelled';
 import PaymentSuccess from '../Pages/Dashboard/Payment/PaymentSuccess';
+import PaymentHistory from '../Pages/Dashboard/PaymentHistory/PaymentHistory';
 import MyTuitions from '../Pages/Dashboard/StudentsDashboard/MyTuitions';
 import GoogleMap from '../Pages/GoogleMap/GoogleMap';
 import Home from '../Pages/Home/Home';
 import PostTuition from '../Pages/PostTuition/PostTuition';
 import Tuitor from '../Pages/Tuitor/Tuitor';
 import PrivetRouter from './PrivetRouter';
-import PaymentHistory from '../Pages/Dashboard/PaymentHistory/PaymentHistory';
 
 export const router = createBrowserRouter([
   {
@@ -88,9 +89,13 @@ export const router = createBrowserRouter([
         element: <PaymentCancelled></PaymentCancelled>,
       },
       {
-        path:'payment-history',
-        element:<PaymentHistory></PaymentHistory>
-      }
+        path: 'payment-history',
+        element: <PaymentHistory></PaymentHistory>,
+      },
+      {
+        path: 'approve-tuitor',
+        element: <ApproveTuitor></ApproveTuitor>,
+      },
     ],
   },
 ]);
