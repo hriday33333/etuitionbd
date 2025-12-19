@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { FaUserCheck } from 'react-icons/fa6';
+import { FaRegEye } from "react-icons/fa";
 import { IoPersonRemoveSharp } from 'react-icons/io5';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
@@ -75,6 +76,12 @@ const ApproveTuitor = () => {
                   }
                 </td>
                 <td>
+                  <button
+                    onClick={() => handleApproval(tuitor)}
+                    className="btn btn-secondary text-black btn-sm"
+                  >
+                    <FaRegEye />
+                  </button>
                   <button
                     onClick={() => handleApproval(tuitor)}
                     className="btn btn-secondary text-black btn-sm"

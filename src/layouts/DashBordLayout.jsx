@@ -1,6 +1,7 @@
+import { FaUsersCog } from 'react-icons/fa';
 import { FaCcMastercard } from 'react-icons/fa6';
 import { FiBookOpen } from 'react-icons/fi';
-import { GiTeacher } from "react-icons/gi";
+import { GiTeacher } from 'react-icons/gi';
 import { Link, NavLink, Outlet } from 'react-router';
 import Logo from '../Components/Logo';
 
@@ -106,8 +107,20 @@ const DashBordLayout = () => {
                 to="/dashboard/approve-tuitor"
               >
                 {' '}
-               <GiTeacher />
+                <GiTeacher />
                 <span className="is-drawer-close:hidden">Approve Tuitor</span>
+              </NavLink>
+            </li>
+            {/* Users Managment */}
+            <li>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-secondary"
+                data-tip="Users Managment"
+                to="/dashboard/users-managment"
+              >
+                {' '}
+                <FaUsersCog />
+                <span className="is-drawer-close:hidden">Users Managment</span>
               </NavLink>
             </li>
             {/* List item */}

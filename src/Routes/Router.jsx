@@ -10,6 +10,7 @@ import PaymentCancelled from '../Pages/Dashboard/Payment/PaymentCancelled';
 import PaymentSuccess from '../Pages/Dashboard/Payment/PaymentSuccess';
 import PaymentHistory from '../Pages/Dashboard/PaymentHistory/PaymentHistory';
 import MyTuitions from '../Pages/Dashboard/StudentsDashboard/MyTuitions';
+import UsersManagment from '../Pages/Dashboard/UsersManagment/UsersManagment';
 import GoogleMap from '../Pages/GoogleMap/GoogleMap';
 import Home from '../Pages/Home/Home';
 import PostTuition from '../Pages/PostTuition/PostTuition';
@@ -95,6 +96,10 @@ export const router = createBrowserRouter([
       {
         path: 'approve-tuitor',
         element: <ApproveTuitor></ApproveTuitor>,
+      },
+      {
+        path: 'users-managment',
+        element: <UsersManagment></UsersManagment>,
       },
     ],
   },
