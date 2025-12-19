@@ -4,8 +4,12 @@ import { FiBookOpen } from 'react-icons/fi';
 import { GiTeacher } from 'react-icons/gi';
 import { Link, NavLink, Outlet } from 'react-router';
 import Logo from '../Components/Logo';
+import useRole from '../Hooks/useRole';
 
 const DashBordLayout = () => {
+  const { role } = useRole();
+  console.log('in the dasboard layout',role);
+
   return (
     <div className="drawer lg:drawer-open max-w-7xl mx-auto ">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -99,30 +103,40 @@ const DashBordLayout = () => {
                 <span className="is-drawer-close:hidden">Payment History</span>
               </NavLink>
             </li>
-            {/* Approve Tuitor */}
-            <li>
-              <NavLink
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-secondary"
-                data-tip="Approve Tuitor"
-                to="/dashboard/approve-tuitor"
-              >
-                {' '}
-                <GiTeacher />
-                <span className="is-drawer-close:hidden">Approve Tuitor</span>
-              </NavLink>
-            </li>
-            {/* Users Managment */}
-            <li>
-              <NavLink
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-secondary"
-                data-tip="Users Managment"
-                to="/dashboard/users-managment"
-              >
-                {' '}
-                <FaUsersCog />
-                <span className="is-drawer-close:hidden">Users Managment</span>
-              </NavLink>
-            </li>
+
+            {role === 'admin' && (
+              <>
+                {/* Approve Tuitor */}
+                <li>
+                  <NavLink
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-secondary"
+                    data-tip="Approve Tuitor"
+                    to="/dashboard/approve-tuitor"
+                  >
+                    {' '}
+                    <GiTeacher />
+                    <span className="is-drawer-close:hidden">
+                      Approve Tuitor
+                    </span>
+                  </NavLink>
+                </li>
+                {/* Users Managment */}
+                <li>
+                  <NavLink
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-secondary"
+                    data-tip="Users Managment"
+                    to="/dashboard/users-managment"
+                  >
+                    {' '}
+                    <FaUsersCog />
+                    <span className="is-drawer-close:hidden">
+                      Users Managment
+                    </span>
+                  </NavLink>
+                </li>
+              </>
+            )}
+
             {/* List item */}
             <li>
               <button

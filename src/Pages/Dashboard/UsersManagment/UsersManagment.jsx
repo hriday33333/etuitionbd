@@ -3,8 +3,10 @@ import { FaUserShield } from 'react-icons/fa';
 import { FiShieldOff } from 'react-icons/fi';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+
 const UsersManagment = () => {
   const axiosSecure = useAxiosSecure();
+
   const { refetch, data: users = [] } = useQuery({
     queryKey: ['userInfo'],
     queryFn: async () => {
@@ -13,41 +15,66 @@ const UsersManagment = () => {
     },
   });
 
-  const hanndleMakeUser = (user) => {
-    const roleInfo = { role: 'admin' };
-    axiosSecure.patch(`/userInfo/${user._id}`, roleInfo).then((res) => {
-      console.log(res.data);
-      if (res.data.modifiedCount) {
-        refetch();
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: `${user.displayName} Mark as an Admin `,
-          showConfirmButton: false,
-          timer: 2500,
+  /* ===== Make Admin ===== */
+  const handleMakeAdmin = (user) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `You want to make ${user.displayName} an Admin`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Make Admin',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const roleInfo = { role: 'admin' };
+        axiosSecure.patch(`/userInfo/${user._id}/role`, roleInfo).then((res) => {
+          if (res.data.modifiedCount) {
+            refetch();
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: `${user.displayName} Mark as an Admin`,
+              showConfirmButton: false,
+              timer: 2500,
+            });
+          }
         });
       }
     });
   };
 
+  /* ===== Remove Admin ===== */
   const handleRemoveAdmin = (user) => {
-    const roleInfo = { role: 'user' };
-    axiosSecure.patch(`/userInfo/${user._id}`, roleInfo).then((res) => {
-      if (res.data.modifiedCount) {
-        refetch();
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: `${user.displayName} remove from an Admin `,
-          showConfirmButton: false,
-          timer: 2500,
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `You want to remove ${user.displayName} from Admin`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Remove',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const roleInfo = { role: 'user' };
+        axiosSecure.patch(`/userInfo/${user._id}/role`, roleInfo).then((res) => {
+          if (res.data.modifiedCount) {
+            refetch();
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: `${user.displayName} remove from an Admin`,
+              showConfirmButton: false,
+              timer: 2500,
+            });
+          }
         });
       }
     });
   };
+
   return (
     <div>
       <h2 className="text-4xl">Users Managment:{users.length}</h2>
+
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
@@ -61,10 +88,12 @@ const UsersManagment = () => {
               <th>Other Actions</th>
             </tr>
           </thead>
+
           <tbody>
             {users.map((user, index) => (
-              <tr>
+              <tr key={user._id}>
                 <td>{index + 1}</td>
+
                 <td>
                   <div className="flex items-center gap-3">
                     <div className="avatar">
@@ -78,8 +107,10 @@ const UsersManagment = () => {
                     </div>
                   </div>
                 </td>
+
                 <td>{user.email}</td>
                 <td>{user.role}</td>
+
                 <td>
                   {user.role === 'admin' ? (
                     <button
@@ -90,13 +121,14 @@ const UsersManagment = () => {
                     </button>
                   ) : (
                     <button
-                      onClick={() => hanndleMakeUser(user)}
+                      onClick={() => handleMakeAdmin(user)}
                       className="btn btn-secondary text-base-content btn-sm"
                     >
                       <FaUserShield />
                     </button>
                   )}
                 </td>
+
                 <th>
                   <button className="btn btn-ghost btn-xs">details</button>
                 </th>

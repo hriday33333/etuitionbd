@@ -15,6 +15,7 @@ import GoogleMap from '../Pages/GoogleMap/GoogleMap';
 import Home from '../Pages/Home/Home';
 import PostTuition from '../Pages/PostTuition/PostTuition';
 import Tuitor from '../Pages/Tuitor/Tuitor';
+import AdminRoute from './AdminRoute';
 import PrivetRouter from './PrivetRouter';
 
 export const router = createBrowserRouter([
@@ -95,11 +96,20 @@ export const router = createBrowserRouter([
       },
       {
         path: 'approve-tuitor',
-        element: <ApproveTuitor></ApproveTuitor>,
+        element: (
+          <AdminRoute>
+            <ApproveTuitor></ApproveTuitor>,
+          </AdminRoute>
+        ),
       },
       {
         path: 'users-managment',
-        element: <UsersManagment></UsersManagment>,
+
+        element: (
+          <AdminRoute>
+            <UsersManagment></UsersManagment>,
+          </AdminRoute>
+        ),
       },
     ],
   },

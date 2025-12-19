@@ -1,4 +1,5 @@
 import { Navigate, useLocation } from 'react-router';
+import LoadingSpinner from '../Components/LoadingSpinner';
 import useAuth from '../Hooks/useAuth';
 
 const PrivetRouter = ({ children }) => {
@@ -6,11 +7,7 @@ const PrivetRouter = ({ children }) => {
   const location = useLocation();
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <span className="loading loading-infinity loading-xl"></span>
-      </div>
-    );
+    return <LoadingSpinner></LoadingSpinner>;
   }
 
   if (!user) {
