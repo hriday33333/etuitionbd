@@ -24,10 +24,10 @@ const MyTuitions = () => {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#6366F1', // Indigo
-      cancelButtonColor: '#EF4444',  // Red
+      cancelButtonColor: '#EF4444', // Red
       confirmButtonText: 'Yes, delete it!',
-      background: '#F3F4F6',         // Light gray background
-      color: '#1F2937',              // Dark text
+      background: '#F3F4F6', // Light gray background
+      color: '#1F2937', // Dark text
       customClass: {
         popup: 'rounded-xl shadow-2xl p-6',
         title: 'text-indigo-600 font-bold',
@@ -84,6 +84,7 @@ const MyTuitions = () => {
               <th>Subject</th>
               <th>Budget (৳)</th>
               <th>Payment</th>
+              <th>Traking Id</th>
               <th>Payment Status</th>
               <th>Actions</th>
             </tr>
@@ -108,7 +109,8 @@ const MyTuitions = () => {
                     </button>
                   )}
                 </td>
-                <td>{student.delevaryStatus}</td>
+                <td>{student.trackingId}</td>
+                <td>{student.deliveryStatus}</td>
                 <td className="flex gap-2">
                   <button className="btn btn-square bg-yellow-300 hover:bg-yellow-400">
                     <FaRegEdit />
@@ -141,7 +143,9 @@ const MyTuitions = () => {
             </h2>
             <p className="text-gray-600">Class: {student.class}</p>
             <p className="text-gray-600">Subject: {student.subject}</p>
-            <p className="text-gray-800 font-semibold">Budget: ৳{student.budget}</p>
+            <p className="text-gray-800 font-semibold">
+              Budget: ৳{student.budget}
+            </p>
             <p>
               Payment:{' '}
               {student.paymentStatus === 'paid' ? (
@@ -155,7 +159,8 @@ const MyTuitions = () => {
                 </button>
               )}
             </p>
-            <p>Status: {student.delevaryStatus}</p>
+            <p>Status: {student.deliveryStatus}</p>
+            <p>Tracking Id: {student.trackingId}</p>
             <div className="flex gap-3 mt-3">
               <button className="btn btn-sm bg-yellow-300 hover:bg-yellow-400">
                 <FaRegEdit />

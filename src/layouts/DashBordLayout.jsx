@@ -1,4 +1,6 @@
 import { FaUsersCog } from 'react-icons/fa';
+import { FaUserCheck } from "react-icons/fa";
+
 import { FaCcMastercard } from 'react-icons/fa6';
 import { FiBookOpen } from 'react-icons/fi';
 import { GiTeacher } from 'react-icons/gi';
@@ -87,7 +89,7 @@ const DashBordLayout = () => {
                 to="/dashboard/my-tuitions"
               >
                 {' '}
-                <FiBookOpen />
+                <FiBookOpen   className="text-xl mr-2" />
                 <span className="is-drawer-close:hidden">My Tuitions</span>
               </NavLink>
             </li>
@@ -99,7 +101,7 @@ const DashBordLayout = () => {
                 to="/dashboard/payment-history"
               >
                 {' '}
-                <FaCcMastercard />
+                <FaCcMastercard  className="text-xl mr-2"  />
                 <span className="is-drawer-close:hidden">Payment History</span>
               </NavLink>
             </li>
@@ -114,9 +116,22 @@ const DashBordLayout = () => {
                     to="/dashboard/approve-tuitor"
                   >
                     {' '}
-                    <GiTeacher />
+                    <GiTeacher  className="text-xl mr-2"  />
                     <span className="is-drawer-close:hidden">
                       Approve Tuitor
+                    </span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-secondary"
+                    data-tip="Applied Tutors"
+                    to="/dashboard/applied-tutors"
+                  >
+                    {' '}
+                    <FaUserCheck className="text-xl mr-2" />
+                    <span className="is-drawer-close:hidden">
+                     Applied Tutors
                     </span>
                   </NavLink>
                 </li>
@@ -128,7 +143,7 @@ const DashBordLayout = () => {
                     to="/dashboard/users-managment"
                   >
                     {' '}
-                    <FaUsersCog />
+                    <FaUsersCog  className="text-xl mr-2"  />
                     <span className="is-drawer-close:hidden">
                       Users Managment
                     </span>

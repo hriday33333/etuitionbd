@@ -4,6 +4,7 @@ import DashBordLayout from '../layouts/DashBordLayout';
 import RootLayout from '../layouts/RootLayout';
 import Login from '../Pages/Auth/Login/Login';
 import Register from '../Pages/Auth/Register/Register';
+import AppliedTutors from '../Pages/Dashboard/AppliedTutors/AppliedTutors';
 import ApproveTuitor from '../Pages/Dashboard/ApproveTuitor/ApproveTuitor';
 import Payment from '../Pages/Dashboard/Payment/Payment';
 import PaymentCancelled from '../Pages/Dashboard/Payment/PaymentCancelled';
@@ -103,8 +104,15 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: 'applied-tutors',
+        element: (
+          <AdminRoute>
+            <AppliedTutors></AppliedTutors>
+          </AdminRoute>
+        ),
+      },
+      {
         path: 'users-managment',
-
         element: (
           <AdminRoute>
             <UsersManagment></UsersManagment>,
