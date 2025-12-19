@@ -31,6 +31,7 @@ export const router = createBrowserRouter([
             <Tuitor></Tuitor>
           </PrivetRouter>
         ),
+        loader: () => fetch('/serviceCenter.json').then((res) => res.json()),
       },
       {
         path: 'post_tuition',

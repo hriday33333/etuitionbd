@@ -19,7 +19,7 @@ const Navbar = () => {
         <NavLink to="">Home</NavLink>
       </li>
       <li>
-        <NavLink to="">Item 1</NavLink>
+        <NavLink to="/tuitor">Be a Tuitor</NavLink>
       </li>
       <li>
         <NavLink to="/map">Map</NavLink>
@@ -71,7 +71,6 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end">
-
         {user ? (
           <a onClick={handleLogOut} className="btn bg-secondary">
             Log Out
