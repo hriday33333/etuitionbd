@@ -4,7 +4,7 @@ import DashBordLayout from '../layouts/DashBordLayout';
 import RootLayout from '../layouts/RootLayout';
 import Login from '../Pages/Auth/Login/Login';
 import Register from '../Pages/Auth/Register/Register';
-import AppliedTutors from '../Pages/Dashboard/AppliedTutors/AppliedTutors';
+import AppliedTutor from '../Pages/Dashboard/AppliedTutor/AppliedTutor';
 import ApproveTuitor from '../Pages/Dashboard/ApproveTuitor/ApproveTuitor';
 import Payment from '../Pages/Dashboard/Payment/Payment';
 import PaymentCancelled from '../Pages/Dashboard/Payment/PaymentCancelled';
@@ -18,6 +18,8 @@ import PostTuition from '../Pages/PostTuition/PostTuition';
 import Tuitor from '../Pages/Tuitor/Tuitor';
 import AdminRoute from './AdminRoute';
 import PrivetRouter from './PrivetRouter';
+import TuitorRoute from './TuitorRoute';
+import AppliedTutors from '../Pages/Dashboard/AppliedTutors/AppliedTutors';
 
 export const router = createBrowserRouter([
   {
@@ -95,6 +97,18 @@ export const router = createBrowserRouter([
         path: 'payment-history',
         element: <PaymentHistory></PaymentHistory>,
       },
+
+      // Tutor route
+      {
+        path: 'accept-tuiton',
+        element: (
+          <TuitorRoute>
+            <AppliedTutor></AppliedTutor>
+          </TuitorRoute>
+        ),
+      },
+
+      // Admin route
       {
         path: 'approve-tuitor',
         element: (

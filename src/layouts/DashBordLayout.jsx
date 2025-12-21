@@ -1,6 +1,5 @@
-import { FaUsersCog } from 'react-icons/fa';
-import { FaUserCheck } from "react-icons/fa";
-
+import { FaUserCheck, FaUsersCog } from 'react-icons/fa';
+import { FaTasks } from "react-icons/fa";
 import { FaCcMastercard } from 'react-icons/fa6';
 import { FiBookOpen } from 'react-icons/fi';
 import { GiTeacher } from 'react-icons/gi';
@@ -10,14 +9,14 @@ import useRole from '../Hooks/useRole';
 
 const DashBordLayout = () => {
   const { role } = useRole();
-  console.log('in the dasboard layout',role);
+  console.log('in the dasboard layout', role);
 
   return (
     <div className="drawer lg:drawer-open max-w-7xl mx-auto ">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content">
+      <div className="drawer-content ">
         {/* Navbar */}
-        <nav className="navbar w-full bg-base-300">
+        <nav className="navbar w-full bg-base-300  ">
           <label
             htmlFor="my-drawer-4"
             aria-label="open sidebar"
@@ -89,7 +88,7 @@ const DashBordLayout = () => {
                 to="/dashboard/my-tuitions"
               >
                 {' '}
-                <FiBookOpen   className="text-xl mr-2" />
+                <FiBookOpen className="text-xl mr-2" />
                 <span className="is-drawer-close:hidden">My Tuitions</span>
               </NavLink>
             </li>
@@ -101,11 +100,31 @@ const DashBordLayout = () => {
                 to="/dashboard/payment-history"
               >
                 {' '}
-                <FaCcMastercard  className="text-xl mr-2"  />
+                <FaCcMastercard className="text-xl mr-2" />
                 <span className="is-drawer-close:hidden">Payment History</span>
               </NavLink>
             </li>
 
+            {role === 'tuitor' && (
+              <>
+                <li>
+                  <NavLink
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-secondary"
+                    data-tip="accept-tuiton"
+                    to="/dashboard/accept-tuiton"
+                  >
+                    {' '}
+                    <FaTasks  className="text-xl mr-2"  />
+
+                    <span className="is-drawer-close:hidden">
+                      Accept Tuiton
+                    </span>
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {/* admin only routs */}
             {role === 'admin' && (
               <>
                 {/* Approve Tuitor */}
@@ -116,7 +135,7 @@ const DashBordLayout = () => {
                     to="/dashboard/approve-tuitor"
                   >
                     {' '}
-                    <GiTeacher  className="text-xl mr-2"  />
+                    <GiTeacher className="text-xl mr-2" />
                     <span className="is-drawer-close:hidden">
                       Approve Tuitor
                     </span>
@@ -131,7 +150,7 @@ const DashBordLayout = () => {
                     {' '}
                     <FaUserCheck className="text-xl mr-2" />
                     <span className="is-drawer-close:hidden">
-                     Applied Tutors
+                      Applied Tutors
                     </span>
                   </NavLink>
                 </li>
@@ -143,7 +162,7 @@ const DashBordLayout = () => {
                     to="/dashboard/users-managment"
                   >
                     {' '}
-                    <FaUsersCog  className="text-xl mr-2"  />
+                    <FaUsersCog className="text-xl mr-2" />
                     <span className="is-drawer-close:hidden">
                       Users Managment
                     </span>
